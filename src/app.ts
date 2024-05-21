@@ -4,6 +4,8 @@ import dataSource from "./datasource/dataSource";
 import { User3 } from "./entities/User.entity";
 import { Profile } from "./entities/Profile.entity";
 import { Todo } from "./entities/Todo.entity";
+import { Student } from "./entities/Student.entity";
+import { Course } from "./entities/Course.entity";
 const PORT = 3000;
 const app = express();
 
@@ -47,25 +49,25 @@ dataSource.initialize().then(()=>{
 // })
 
 app.get("/", async(req: Request,res:Response)=>{
-    let userRepo = dataSource.getRepository(User3);
+    let studentRepo = dataSource.getRepository(Student)
 
-    const todo1 = new Todo();
-    todo1.title = 'learn typeorm';
-    todo1.description = 'learn typeorm with bhavani'
+    const course1 = new Course();
+    course1.code = 'CS-993';
+    course1.title = 'Computer programming';
 
-    const todo2 = new Todo();
-    todo1.title = 'learn typescript';
-    todo1.description = 'learn typescript with bhavani'
+    const course2 = new Course();
+    course1.code = 'CS-994';
+    course1.title = 'web programming';
+    
+    const student = new Student();
+    student.age = 22;
+    student.firstName = 'rani';
+    student.lastName = 'ande';
+    student.rollNo = 'st-334';
+    student.courses = [course1,course2]
 
-    const user = new User3();
-    user.firstName = "mahi";
-    user.lastName = 'karri';
-    user.isActive = true;
-    user.todos = [todo1,todo2]
-
-    let savedUser = await userRepo.save(user);
-    res.json(savedUser)
-
+    let savedStudent = await studentRepo.save(student)
+    res.json(savedStudent)
 })
 app.listen(PORT, ()=>{
     console.log("server has started http://localhost:3000/")
