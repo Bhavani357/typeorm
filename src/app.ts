@@ -3,7 +3,7 @@ import express, {Request,Response} from 'express';
 import dataSource from "./datasource/dataSource";
 import { User3 } from "./entities/User.entity";
 import { Profile } from "./entities/Profile.entity";
-
+import { Todo } from "./entities/Todo.entity";
 const PORT = 3000;
 const app = express();
 
@@ -47,52 +47,24 @@ dataSource.initialize().then(()=>{
 // })
 
 app.get("/", async(req: Request,res:Response)=>{
-    let profileRepo = dataSource.getRepository(Profile);
-    // let userRepo = dataSource.getRepository(User3);
+    let userRepo = dataSource.getRepository(User3);
 
-    // let profile = new Profile();
-    // profile.gender = 'female';
-    // profile.skill = 'software';
-    
+    const todo1 = new Todo();
+    todo1.title = 'learn typeorm';
+    todo1.description = 'learn typeorm with bhavani'
 
-    // let saveProfile = await profileRepo.save(profile);
+    const todo2 = new Todo();
+    todo1.title = 'learn typescript';
+    todo1.description = 'learn typescript with bhavani'
 
-    // let user = new User3();
-    // user.firstName = 'bhavani';
-    // user.lastName = 'yasarla';
-    // user.isActive = true;
-    // user.profile = saveProfile;
+    const user = new User3();
+    user.firstName = "mahi";
+    user.lastName = 'karri';
+    user.isActive = true;
+    user.todos = [todo1,todo2]
 
-    // let savedUser = await userRepo.save(user)
-    // res.json(savedUser)
-
-    // if you want to join tables without saving the table 
-
-    //post data
-    
-    // let userRepo = dataSource.getRepository(User3);
-
-    // let profile = new Profile();
-    // profile.gender = 'male';
-    // profile.skill = 'graphic designer';
-
-    // let user = new User3();
-    // user.firstName = 'thanu';
-    // user.lastName = 'tentu';
-    // user.isActive = true;
-    // user.profile = profile;
-
-    // let savedUser = await userRepo.save(user);
-
-    // left to right 
-    // user to profile
-
-    // res.json(savedUser)
-    
-
-    // finding data
-    res.json(await profileRepo.find({ relations:['user']}));//{ relations:['profile']} is for showing foreign key table data with primary table
-
+    let savedUser = await userRepo.save(user);
+    res.json(savedUser)
 
 })
 app.listen(PORT, ()=>{

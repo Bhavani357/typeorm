@@ -12,8 +12,8 @@ export class Profile{
     @Column({nullable: true})
     skill: string;
 
-    @OneToOne(()=>User3, (user)=>user.profile)
-    user: User3;
+    // @OneToOne(()=>User3, (user)=>user.profile)
+    // user: User3;
     
 
 }
